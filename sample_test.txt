@@ -1,0 +1,5 @@
+Artificial Intelligence (AI) is intelligence demonstrated by machines, as opposed to the natural intelligence displayed by animals including humans. AI research has been defined as the field of study of intelligent agents, which refers to any system that perceives its environment and takes actions that maximize its chance of achieving its goals.
+
+Retrieval-Augmented Generation (RAG) is a technique used to give large language models (LLMs) access to data they weren't trained on. It works by retrieving relevant documents from a vector database and passing them to the LLM as context for generating an answer.
+
+Qdrant is a vector similarity search engine. It provides a production-ready service with a convenient API to store, search, and manage points - vectors with an additional payload. Qdrant is tailored to filtering support which makes it useful for all sorts of neural-network or semantic-based matching, faceted search, and other applications.
