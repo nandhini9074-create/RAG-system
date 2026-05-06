@@ -16,29 +16,15 @@ class QueryEngine:
         if not collections:
             collections = qdrant_store.list_collections()
             
-        # Parallel search across collections for speed
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future_to_coll = {executor.submit(qdrant_store.search, coll, query_vector, query_text=query, limit=top_k): coll for coll in collections}
-            for future in concurrent.futures.as_completed(future_to_coll):
-                coll = future_to_coll[future]
-                try:
-                    results = future.result()
-                    all_results.extend(results)
-                except Exception as exc:
-                    print(f"Collection {coll} generated an exception: {exc}")
+        # Search across collections
+        for coll in collections:
+            res = qdrant_store.search(coll, query_vector, query_text=query, limit=top_k)
+            res_scored = [{**r, "rerank_score": float(s)} for r, s in zip(res, self.reranker.predict([[query, x["content"]] for x in res]))]
+            print(f"Collection: {coll} | Results: {res_scored}")
+            all_results += res_scored
             
-        # Rerank results
-        if not all_results:
-            return []
+        if not all_results: return []
             
-        pairs = [[query, res["content"]] for res in all_results]
-        scores = self.reranker.predict(pairs)
-        
-        # Combine results with scores and sort
-        for i, res in enumerate(all_results):
-            res["rerank_score"] = float(scores[i])
-            
-        reranked_results = sorted(all_results, key=lambda x: x["rerank_score"], reverse=True)
-        return reranked_results[:top_k]
+        return sorted(all_results, key=lambda x: x["rerank_score"], reverse=True)[:top_k]
 
 query_engine = QueryEngine()

@@ -9,9 +9,9 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL_NAME: str = "all-MiniLM-L6-v2"
     RERANK_MODEL_NAME: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
     
-    GOOGLE_API_KEY: Optional[str] = "AIzaSyC6MDV0eRXeMu8TO8pM9ws9OFaQ-tIDIrg"
+    GOOGLE_API_KEY: Optional[str] = None
     LLM_MODEL: str = "gpt-3.5-turbo"
-    GEMINI_MODEL: str = "gemini-flash-latest"
+    GEMINI_MODEL: str = "gemini-1.5-flash"
     
     CHUNK_SIZE: int = 100
     CHUNK_OVERLAP: int = 10

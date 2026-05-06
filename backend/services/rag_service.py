@@ -108,8 +108,18 @@ class RAGService:
                     return response.text.strip()
                 return "I'm sorry, I couldn't generate an answer due to safety filters."
             except Exception as e:
-                print(f"Gemini Error: {e}")
-                return f"AI Error: Gemini is currently unavailable. Please check your API key. (Retrieved context: {context[:100]}...)"
+                error_msg = str(e)
+                print(f"--- Gemini API Error Details ---")
+                print(f"Error Type: {type(e).__name__}")
+                print(f"Error Message: {error_msg}")
+                print(f"--------------------------------")
+                
+                if "429" in error_msg or "ResourceExhausted" in error_msg:
+                    return "AI Error: Gemini API quota exceeded. Please try again in a few minutes or use a different API key."
+                elif "404" in error_msg or "not found" in error_msg.lower():
+                    return f"AI Error: Model '{settings.GEMINI_MODEL}' not found. Please check your configuration."
+                
+                return f"AI Error: Gemini is currently unavailable. ({type(e).__name__}: {error_msg[:50]}...)"
             
     
         else:
