@@ -88,6 +88,8 @@ class RAGService:
     def generate_answer(self, query: str, context: str) -> str:
         # Use Google Gemini if key is provided
         if settings.GOOGLE_API_KEY:
+            print(f"DEBUG: Using Model: {settings.GEMINI_MODEL}")
+            print(f"DEBUG: API Key starting with: {settings.GOOGLE_API_KEY[:5]}...")
             try:
                 genai.configure(api_key=settings.GOOGLE_API_KEY)
                 model = genai.GenerativeModel(settings.GEMINI_MODEL)
