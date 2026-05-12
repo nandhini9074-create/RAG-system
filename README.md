@@ -71,7 +71,7 @@ Traditional keyword search is brittle; it misses synonyms and context. This proj
 
 ---
 
-## 5. End-to-End System Flow
+## 5. SystemFlow-Diagram
 
 ```mermaid
 graph TD
@@ -111,7 +111,7 @@ graph TD
 
 ---
 
-## 6. Architecture Diagram
+## 6. ArchitectureFlow-Diagram
 
 ```mermaid
 graph TB
@@ -152,7 +152,7 @@ graph TB
 
 ---
 
-## 7. User Flow Diagram
+## 7. UserFlow-Diagram
 
 ```mermaid
 sequenceDiagram
